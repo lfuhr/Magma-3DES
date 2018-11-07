@@ -1,0 +1,9 @@
+// printf "%h", file_read("filename");
+function file_read(F)
+	bindata := ReadBinary(F);
+    akk := 0;
+	for i in [1..#bindata] do
+        akk := akk * 2^8 + bindata[i];
+    end for;
+    return akk;
+end function;

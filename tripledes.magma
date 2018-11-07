@@ -1,0 +1,29 @@
+load "file_read.magma";
+
+function enc_triple_DES()
+end function
+
+function dec_triple_DES()
+end function
+
+function enc_DES(input)
+	initial_permutation();
+end function
+
+function dec_DES(input)
+end function
+
+function cipher_function()
+end function
+
+function initial_permutation()
+end function
+
+function reverse_initial_permutation()
+end function
+
+function split_data()
+end function
+
+function concatenate_data()
+end function

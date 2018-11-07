@@ -1,0 +1,16 @@
+load "file_read.magma";
+load "tripledes.magma";
+
+enc_DES_openSSL("somefile") eq enc_DES()
+
+function enc_tripple_DES_openSSL()
+end function
+
+function dec_tripple_DES_openSSL()
+end function
+
+function enc_DES_openSSL(input)
+end function
+
+function dec_DES_openSSL(input)
+end function
