@@ -36,9 +36,9 @@ end function;
 // Fuhr
 function permute_integer(n, perm)
 	r := 0;
-	for i in [1..64] do
-		if BitwiseAnd(n,2^(64-i)) ne 0 then
-			r +:= 2^(perm[i]-1);
+	for i in [1..#perm] do
+		if BitwiseAnd(n, 2^(#perm - i)) ne 0 then
+			r +:= 2^(perm[i] - 1);
 		end if;
 	end for;
 	return r;
