@@ -58,6 +58,10 @@ end function;
 function concatenate_data()
 end function;
 
+function generate_keys(key)
+	return keys;
+end function;
+
 // Fuhr
 function permute_integer(n, perm)
 	r := 0;
