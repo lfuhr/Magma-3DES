@@ -1,0 +1,67 @@
+load "tables.magma";
+load "initSubBox.magma";
+
+// Der zu uebergebene Vektor muss eine laenge von 48 haben
+// da ansonsten das mehrdimensionale Array ret mit falschen
+// Werten befüllt wird.
+// Getestet kann diese Funktion mit Hilfe des Testvektors aus K:=FiniteField(2) 
+// werden mit a:=[K!i: i in [1..48]];
+
+
+substitution:=function(vec)
+	S:=AssociativeArray();
+	keys:=["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"];
+	val:=[s1, s2, s3, s4, s5, s6, s7, s8];
+
+	// Initialisierung der Map die als Eingangswerte die entsprechende
+	// S-Box uebergeben bekommt und dann die entsprechende Zeile und zum 
+	// Schluss die entsprechende Spalte
+	// Beispiel: S["S1"][[0,0]][[0,1,0,1]]; -> liefert den Wert der ersten S-Box
+	// für die erste Zeile und das 9. Element. Rueckgabewert ist ein Element 
+	// aus dem V4:=VectorSpace(FiniteField(2), 4);
+
+	for iter in [1..#keys] do
+		S[keys[iter]]:=initSubBox(val[iter]);
+	end for;
+
+	// Hier wird der Vektor vec in 8 gleich lange Subvektoren zuerschnitten
+	subs:=[];
+	for vec_num in [0..7] do
+		temp :=[];
+		iter := 1;
+		while ((iter + 6*vec_num) mod 6) ne 0 do
+			temp[iter] := vec[iter + 6*vec_num];
+			iter := iter + 1;
+		end while;
+		temp[iter]:= vec[iter + 6*vec_num];
+		subs[vec_num + 1] :=temp;
+	end for;
+		
+	// An dieser Stelle wird die Liste mit den Subvektoren iteriert und 
+	// in die Liste res die substituierten Vektoren aus den S-Boxen eingetragen
+	res:=[];	
+	for sub_vec in [1..#subs] do 
+		row:=[subs[sub_vec][1], subs[sub_vec][6]];
+		col:=[subs[sub_vec][2], subs[sub_vec][3], subs[sub_vec][4], subs[sub_vec][5]];
+		res[sub_vec]:=S[keys[sub_vec]][row][col];
+	end for;
+	
+	K:=FiniteField(2);
+	V32:=VectorSpace(K, 32);
+	
+	// Zusammensetzen des Vektors aus der Liste res zu einem einzelnen Vektor
+	list:=[];
+	iter:=1;
+	for row in [1..#res] do
+		for col in [1..#res[row]] do
+			list[iter]:=res[row][col];
+			iter := iter + 1;
+		end for;
+	end for;
+	
+
+	// Rueckgabe des Elements aus V32:= VectorSpace(K, 32) wobei K der kleinste Koerper
+	// mit zwei Elementen ist.
+	return V32!list;
+	
+end function;

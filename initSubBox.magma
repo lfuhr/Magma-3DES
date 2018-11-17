@@ -1,21 +1,35 @@
 initSubBox:= function(temp)
+	K:=FiniteField(2);
+	V4:=VectorSpace(K, 4);
+	V2:=VectorSpace(K, 2);
 	S1:=AssociativeArray();
 
-	statement_col:=["0000", "0001", "0010", "0011", "0100", "0101", "0110", "0111", "1000",
-					"1001", "1010", "1011", "1100", "1101", "1110", "1111"];
-	statement_row:=["00","01", "10", "11"];
+	statement_col_num:=[i:i in [0..15]];
+	statement_row_num:=[i:i in [0..3]];
 
 	i:=1;
-
+	
 	for r in [1..4] do
-		R:= AssociativeArray();
+
+		R:=AssociativeArray();
 		while (i mod 16) ne 0 do
-			R[statement_col[i-(r-1)*16]]:= temp[i];
-			i:=i + 1;
+			statement_col:=V4!Reverse(Intseq(statement_col_num[i-(r-1)*16], 2, 4)); 
+			// Das eigtl. Element wird nicht als Element aus V4 zurueck gegeben, da
+			// dieses im weiteren Verlauf noch Konkatiniert wird.
+			R[statement_col]:=Reverse(Intseq(temp[i], 2, 4));
+			// R[statement_col]:=V4!Reverse(Intseq(temp[i], 2, 4));
+			i:=i+1;
 		end while;
-		R[statement_col[i-(r-1)*16]]:= temp[i];
-		S1[statement_row[r]]:= R;
+		statement_col:=V4!Reverse(Intseq(statement_col_num[i-(r-1)*16], 2, 4));
+		// Auch hier gilt die gleiche Argumentation wie in der while-Schleife.
+		R[statement_col]:=Reverse(Intseq(temp[i], 2, 4));
+		//R[statement_col]:=V4!Reverse(Intseq(temp[i], 2, 4));
+		
+		statement_row:=V2!Reverse(Intseq(statement_row_num[r], 2, 2));
+		S1[statement_row]:=R;
+		
 		i:=i+1;
+	
 	end for;
 
 	return S1;
