@@ -12,25 +12,54 @@ end function;
 IP_inverse := invert_permutation(IP);
 // 1823743426 eq permute_integer(permute_integer(1823743426, IP),IP_inverse);
 
-function enc_triple_DES()
+function enc_triple_DES(input, k1, k2, k3)
+	return enc_DES(k3, dec_DES( k2, enc_DES(k1, input)));
 end function;
 
 function dec_triple_DES()
 end function;
 
-function enc_DES(input)
+// Fuhr
+function enc_DES(key, input)
+	L0R0 := input^ip;
+	L := L0R0[1..32];
+	R := L0R0[33..64];
+	keys := generate_keys(key);
+
+	for i in [1 .. 16] do
+		L_old := L;
+		R_old := R;
+		L := R_old;
+		R := L_old + cipher_function(R_old, keys[i]);
+    end for;
+
+    return (R cat L)^ip;
 end function;
 
-function dec_DES(input)
+function dec_DES(key, input)
 end function;
 
-function cipher_function()
+function cipher_function(bits, key)
+	return permutation( substitution( expansion(bits), key) );
+end function;
+
+function expansion()
+end function;
+
+function substitution()
+end function;
+
+function permutation()
 end function;
 
 function split_data()
 end function;
 
 function concatenate_data()
+end function;
+
+function generate_keys(key)
+	return keys;
 end function;
 
 // Fuhr
