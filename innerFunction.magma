@@ -1,0 +1,175 @@
+// Kolodziej Marco 
+// Implementierungsvorschlag der inneren Funktion des Data Encryption Standard
+
+load "tables.magma";
+
+// Der Funktion initSubBox muss eine Liste mit den entsprechenden Substitutionseintraegen
+// uebergeben werden. Die entsprechenden Listen sind in tables.magma ausgelagert. Man er-
+// haelt eine HashMap.
+
+initSubBox:= function(temp)
+	K:=FiniteField(2);
+	V4:=VectorSpace(K, 4);
+	V2:=VectorSpace(K, 2);
+	S1:=AssociativeArray();
+
+	statement_col_num:=[i:i in [0..15]];
+	statement_row_num:=[i:i in [0..3]];
+
+	i:=1;
+	
+	for r in [1..4] do
+
+		R:=AssociativeArray();
+		while (i mod 16) ne 0 do
+			statement_col:=V4!Reverse(Intseq(statement_col_num[i-(r-1)*16], 2, 4)); 
+			// Das eigtl. Element wird nicht als Element aus V4 zurueck gegeben, da
+			// dieses im weiteren Verlauf noch Konkatiniert wird.
+			R[statement_col]:=Reverse(Intseq(temp[i], 2, 4));
+			// R[statement_col]:=V4!Reverse(Intseq(temp[i], 2, 4));
+			i:=i+1;
+		end while;
+		statement_col:=V4!Reverse(Intseq(statement_col_num[i-(r-1)*16], 2, 4));
+		// Auch hier gilt die gleiche Argumentation wie in der while-Schleife.
+		R[statement_col]:=Reverse(Intseq(temp[i], 2, 4));
+		//R[statement_col]:=V4!Reverse(Intseq(temp[i], 2, 4));
+		
+		statement_row:=V2!Reverse(Intseq(statement_row_num[r], 2, 2));
+		S1[statement_row]:=R;
+		
+		i:=i+1;
+	
+	end for;
+
+	return S1;
+end function;
+
+// Der zu uebergebene Vektor muss eine laenge von 48 haben
+// da ansonsten das mehrdimensionale Array ret mit falschen
+// Werten befüllt wird.
+// Getestet kann diese Funktion mit Hilfe des Testvektors aus K:=FiniteField(2) 
+// werden mit a:=[K!i: i in [1..48]];
+
+substitution:=function(vec)
+	S:=AssociativeArray();
+	keys:=["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"];
+	val:=[s1, s2, s3, s4, s5, s6, s7, s8];
+
+	// Initialisierung der Map die als Eingangswerte die entsprechende
+	// S-Box uebergeben bekommt und dann die entsprechende Zeile und zum 
+	// Schluss die entsprechende Spalte
+	// Beispiel: S["S1"][[0,0]][[0,1,0,1]]; -> liefert den Wert der ersten S-Box
+	// für die erste Zeile und das 9. Element. Rueckgabewert ist ein Element 
+	// aus dem V4:=VectorSpace(FiniteField(2), 4);
+
+	for iter in [1..#keys] do
+		S[keys[iter]]:=initSubBox(val[iter]);
+	end for;
+
+	// Hier wird der Vektor vec in 8 gleich lange Subvektoren zuerschnitten
+	subs:=[];
+	for vec_num in [0..7] do
+		temp :=[];
+		iter := 1;
+		while ((iter + 6*vec_num) mod 6) ne 0 do
+			temp[iter] := vec[iter + 6*vec_num];
+			iter := iter + 1;
+		end while;
+		temp[iter]:= vec[iter + 6*vec_num];
+		subs[vec_num + 1] :=temp;
+	end for;
+		
+	// An dieser Stelle wird die Liste mit den Subvektoren iteriert und 
+	// in die Liste res die substituierten Vektoren aus den S-Boxen eingetragen
+	res:=[];	
+	for sub_vec in [1..#subs] do 
+		row:=[subs[sub_vec][1], subs[sub_vec][6]];
+		col:=[subs[sub_vec][2], subs[sub_vec][3], subs[sub_vec][4], subs[sub_vec][5]];
+		res[sub_vec]:=S[keys[sub_vec]][row][col];
+	end for;
+	
+	K:=FiniteField(2);
+	V32:=VectorSpace(K, 32);
+	
+	// Zusammensetzen des Vektors aus der Liste res zu einem einzelnen Vektor
+	list:=[];
+	iter:=1;
+	for row in [1..#res] do
+		for col in [1..#res[row]] do
+			list[iter]:=res[row][col];
+			iter := iter + 1;
+		end for;
+	end for;
+	
+
+	// Rueckgabe des Elements aus V32:= VectorSpace(K, 32) wobei K der kleinste Koerper
+	// mit zwei Elementen ist.
+	return V32!list;
+	
+end function;
+
+// Die Liste e stammt wieder aus tables.magma. Man erzeugt sich eine Matrix, die gerade eine 
+// 32 x 48 Matrix ist. Durch das setzen der richtigen Eintraege auf 1 aus K laesst sich durch
+// ein vec-Matrix Produkt die expansion des Vektors beschreiben. Uebergeben wird hier ein Vek-
+// tor aus V32:=VectorSpace(K, 32) und man erhaelt einen Vektor aus V48:=VectorSpace(K, 48).
+
+expandVec:=function(vec)
+	K:=FiniteField(2);
+	one:=K!1;
+	V48:=VectorSpace(K, 48);	
+
+	// Matrix mit Nullen aus K:=FiniteField(2) erzeugen
+	// Es wird eine 32 Zeilen und 48 Spalten Matrix erzeugt,
+	// da wir einen Zeilenvektor der Form 1x32 erhalten
+	M:=ZeroMatrix(K, 32, 48);
+	
+	for iter in [1..#e] do
+		M[e[iter], iter]:=one;
+	end for;
+
+	// return V48!vecMatrixProduct(vec, M, K);
+	return vec*M;
+
+end function;
+
+// Eine Hilfsfunktionen, falls vec*M nicht funktioniert. Vektor-Matrix-Produkt. Uebergeben
+// wird der Vektor, die Matrix und der Koerper, über dem die Multiplication vollzogen 
+// werden soll.
+
+vecMatrixProduct:=function(vec, Mat, K)
+	vec_Row:=1;
+	ret:=[];
+	for col in [1..48] do
+		s:=0;
+		for row in [1..32] do
+			s:=s + vec[row]*Mat[row, col];
+		end for;
+		s_tilde:=K!s;
+		ret[col]:=s_tilde;
+	end for;	
+	return ret;
+end function;
+
+// Hier wird die eigtl. innere Funktion abgedeckt. Dabei wird zuerst der Vektor erweitert,
+// dann der Schlüssel auf den expandierten Vektor draufaddiert. Diese Summe wird dann sub-
+// tituiert und zum Schluss noch mit P (wobei p aus tables.magam stammt) permutiert. Es 
+// wird hierbei der rechte Subvektor der Laenge 32 uebergeben und man erhaelt den neuen
+// linken Subvektor auch wieder von der Laenge 32.
+
+inner_f:=function(right, key)
+
+	ex_right:=expandVec(right);
+	
+	ex_right_keyadd:=ex_right + key;
+
+	ex_right_keyadd_subs:=substitution(ex_right_keyadd);
+
+	G32:=Sym(32);
+	P:=G32!p;
+
+	left:=ex_right_keyadd_subs^P;
+
+	return left;
+
+
+end function;

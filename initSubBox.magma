@@ -1,3 +1,5 @@
+// Kolodziej Marco
+
 initSubBox:= function(temp)
 	K:=FiniteField(2);
 	V4:=VectorSpace(K, 4);
