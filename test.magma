@@ -1,16 +1,51 @@
-load "file_read.magma";
-load "tripledes.magma";
+// load "file_read.magma";
+// load "tripledes.magma";
 
-enc_DES_openSSL("somefile") eq enc_DES()
+// enc_DES_openSSL("somefile") eq enc_DES()
+
+K := "0123456789ABCDEF";
+P := "4E6F77206973207468652074696D6520666F7220616C6C20";
+C := "3FA40E8A984D48156A271787AB8883F9893D51EC4B563B53";
 
 function enc_tripple_DES_openSSL()
-end function
+end function;
 
 function dec_tripple_DES_openSSL()
-end function
+end function;
 
-function enc_DES_openSSL(input)
-end function
+// enc_DES_openSSL(K, P)
+function enc_DES_openSSL(key, input)
+	WriteHex(P, "plaintext");
+	System("openssl enc -des-ecb -K -in plaintext -out cipher");
+	return ReadHex("cipher");
+end function;
 
-function dec_DES_openSSL(input)
-end function
+function dec_DES_openSSL(key, input)
+end function;
+
+function hex_to_bitvector(hex)
+	n := #hex;
+	assert n mod 2 eq 0;
+	vec := VectorSpace(GF(2), n*4)!0;
+	for i in [1..n] do
+		for j in [1..4] do
+			vec[(i-1)*4+j] := StringToInteger(hex[i], 16) div (2^(4-j));
+		end for;
+	end for;
+	return vec;
+end function;
+
+function bitvector_to_hex(bitvector)
+	n := OverDimension(bitvector);
+	assert n mod 8 eq 0;
+	str := "";
+	for i in [4*k : k in [0..n/4-1]] do
+		byte := 0;
+		for j in [1..4] do
+			byte +:= Integers()!bitvector[i+j] * 2^(4-j);
+		end for;
+		str cat:= IntegerToString(byte, 16);
+	end for;
+	return str;
+end function;
+// bitvector_to_hex(hex_to_bitvector("00CAFE00"));
