@@ -1,16 +1,20 @@
 // load "file_read.magma";
 load "tables.magma";
 
-function invert_permutation(perm)
-	inverse := [1..#perm];
-	for i in [1..#perm] do
-		inverse[perm[i]] := i;
-	end for;
-	return inverse;
-end function;
+// Marco Kolodziej
+// Laden der Permutationen aus G64
+// Um einen Vektor zu Permutieren muss nun <Vektor>^Permutation genommen werden
+// Bsp: K:=FiniteField(2);
+// V64:=VectorSpace(K, 64);
+// t:=[Random(K):i in [1..64]];
+// t^IP;
+// ElementarBeispiel: t2:=[i: i in [1..64]];
+// t2^IP; -> Werte stehen in der Reihenfolge wie in der Tabelle aus fips für IP
+// IP_INVERSE natürlich analog.
 
-IP_inverse := invert_permutation(IP);
-// 1823743426 eq permute_integer(permute_integer(1823743426, IP),IP_inverse);
+G64:=Sym(64);
+IP:=G64!ip;
+IP_INVERSE:=G64!ip_inverse;
 
 function enc_triple_DES(input, k1, k2, k3)
 	return enc_DES(k3, dec_DES( k2, enc_DES(k1, input)));
@@ -62,14 +66,3 @@ function generate_keys(key)
 	return keys;
 end function;
 
-// Fuhr
-function permute_integer(n, perm)
-	r := 0;
-	for i in [1..#perm] do
-		if BitwiseAnd(n, 2^(#perm - i)) ne 0 then
-			r +:= 2^(perm[i] - 1);
-		end if;
-	end for;
-	return r;
-end function;
-// permute_integer(StringToInteger("1000000000000000000000000", 2), IP); // -> 1
