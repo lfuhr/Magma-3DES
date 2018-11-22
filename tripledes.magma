@@ -1,5 +1,6 @@
 // load "file_read.magma";
 load "tables.magma";
+load "innerFunction.magma";
 
 // Marco Kolodziej
 // Laden der Permutationen aus G64
@@ -26,40 +27,30 @@ end function;
 // Fuhr
 function enc_DES(key, input)
 	L0R0 := input^ip;
-	L := L0R0[1..32];
-	R := L0R0[33..64];
+	V32 := VectorSpace(GF(2), 32);
+	L := V32![ L0R0[i] : i in [1..32]];
+	R := V32![ L0R0[i] : i in [33..64]];
 	keys := generate_keys(key);
 
 	for i in [1 .. 16] do
 		L_old := L;
 		R_old := R;
 		L := R_old;
-		R := L_old + cipher_function(R_old, keys[i]);
+		R := L_old + inner_f(R_old, keys[i]);
     end for;
 
-    return (R cat L)^ip;
+    return concatenate(R, L)^ip;
 end function;
 
 function dec_DES(key, input)
 end function;
 
-function cipher_function(bits, key)
-	return permutation( substitution( expansion(bits), key) );
-end function;
-
-function expansion()
-end function;
-
-function substitution()
-end function;
-
-function permutation()
-end function;
-
 function split_data()
 end function;
 
-function concatenate_data()
+function concatenate(left, right)
+	V64 := VectorSpace(GF(2), 64);
+	return V64!([ left[i] : i in [1..32]] cat [ right[i] : i in [1..32]]);
 end function;
 
 function generate_keys(key)
