@@ -27,9 +27,8 @@ end function;
 // Fuhr
 function enc_DES(key, input)
 	L0R0 := input^ip;
-	V32 := VectorSpace(GF(2), 32);
-	L := V32![ L0R0[i] : i in [1..32]];
-	R := V32![ L0R0[i] : i in [33..64]];
+	L := Submatrix(L0R0, 1, 1, 1, 32);
+	R := Submatrix(L0R0, 1, 1, 33, 64);
 	keys := generate_keys(key);
 
 	for i in [1 .. 16] do
@@ -39,18 +38,13 @@ function enc_DES(key, input)
 		R := L_old + inner_f(R_old, keys[i]);
     end for;
 
-    return concatenate(R, L)^ip;
+    return HorizontalJoin(R, L)^ip;
 end function;
 
 function dec_DES(key, input)
 end function;
 
 function split_data()
-end function;
-
-function concatenate(left, right)
-	V64 := VectorSpace(GF(2), 64);
-	return V64!([ left[i] : i in [1..32]] cat [ right[i] : i in [1..32]]);
 end function;
 
 function generate_keys(key)

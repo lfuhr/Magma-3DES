@@ -1,7 +1,4 @@
-// load "file_read.magma";
 // load "tripledes.magma";
-
-// enc_DES_openSSL("somefile") eq enc_DES()
 
 K := "0123456789ABCDEF";
 P := "4E6F77206973207468652074696D6520666F7220616C6C20";
