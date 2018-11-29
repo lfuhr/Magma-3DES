@@ -49,13 +49,17 @@ function bitvector_to_hex(bitvector)
 end function;
 // bitvector_to_hex(hex_to_bitvector("00CAFE00"));
 
-// Fuhr (test inner function with given key)
-function testCipherFunction()
-	load "innerFunction.magma";
-	K1 := hex_to_bitvector("0b02679b49a5");
-	R := Submatrix(input^IP, 1, 1, 33, 64);
-	res := inner_f(R, K1);
-	print "res", bitvector_to_hex(res);
-	print "should be", "c9efe379";
-end function;
-testCipherFunction()
+
+// load "innerFunction.magma";
+// load "tables.magma";
+// // Fuhr (test inner function with given key)
+// function testCipherFunction()
+// 	IP:=Sym(64)!ip;
+// 	K1 := hex_to_bitvector("0b02679b49a5");
+// 	input := hex_to_bitvector("4E6F772069732074");
+// 	R := Submatrix(input^IP, 1, 33, 1, 32);
+// 	res := inner_f(R, K1);
+// 	print "res", bitvector_to_hex(res);
+// 	print "should be", "c9efe379";
+// end function;
+// testCipherFunction();
