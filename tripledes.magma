@@ -25,11 +25,16 @@ function dec_triple_DES()
 end function;
 
 // Fuhr
-function enc_DES(key, input)
-	L0R0 := input^ip;
+function enc_DES(key, input : dec:=false)
+	L0R0 := input^IP;
 	L := Submatrix(L0R0, 1, 1, 1, 32);
 	R := Submatrix(L0R0, 1, 1, 33, 64);
 	keys := generate_keys(key);
+
+	if dec then
+		// R is left side  and  L is right side.
+		keys = Reverse(keys);
+	end if;
 
 	for i in [1 .. 16] do
 		L_old := L;
@@ -38,16 +43,11 @@ function enc_DES(key, input)
 		R := L_old + inner_f(R_old, keys[i]);
     end for;
 
-    return HorizontalJoin(R, L)^ip;
+    return HorizontalJoin(R, L)^IP_INVERSE;
 end function;
 
+// Fuhr
 function dec_DES(key, input)
-end function;
-
-function split_data()
-end function;
-
-function generate_keys(key)
-	return keys;
+	return enc_DES(key, input : dec:=true)
 end function;
 

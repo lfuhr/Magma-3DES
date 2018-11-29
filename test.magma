@@ -10,7 +10,7 @@ end function;
 function dec_tripple_DES_openSSL()
 end function;
 
-// enc_DES_openSSL(K, P)
+// Fuhr enc_DES_openSSL(K, P)
 function enc_DES_openSSL(key, input)
 	WriteHex(P, "plaintext");
 	System("openssl enc -des-ecb -K -in plaintext -out cipher");
@@ -20,6 +20,7 @@ end function;
 function dec_DES_openSSL(key, input)
 end function;
 
+// Fuhr
 function hex_to_bitvector(hex)
 	n := #hex;
 	assert n mod 2 eq 0;
@@ -32,6 +33,7 @@ function hex_to_bitvector(hex)
 	return vec;
 end function;
 
+// Fuhr
 function bitvector_to_hex(bitvector)
 	n := OverDimension(bitvector);
 	assert n mod 8 eq 0;
@@ -46,3 +48,14 @@ function bitvector_to_hex(bitvector)
 	return str;
 end function;
 // bitvector_to_hex(hex_to_bitvector("00CAFE00"));
+
+// Fuhr (test inner function with given key)
+function testCipherFunction()
+	load "innerFunction.magma";
+	K1 := hex_to_bitvector("0b02679b49a5");
+	R := Submatrix(input^IP, 1, 1, 33, 64);
+	res := inner_f(R, K1);
+	print "res", bitvector_to_hex(res);
+	print "should be", "c9efe379";
+end function;
+testCipherFunction()

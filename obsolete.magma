@@ -1,6 +1,6 @@
 // Fuhr Can be done with Submatrix function
+V32 := VectorSpace(GF(2), 32);
 L := V32![ L0R0[i] : i in [1..32]];
-R := V32![ L0R0[i] : i in [33..64]];
 function concatenate(left, right)
 	V64 := VectorSpace(GF(2), 64);
 	return V64!([ left[i] : i in [1..32]] cat [ right[i] : i in [1..32]]);
