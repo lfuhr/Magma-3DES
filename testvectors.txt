@@ -1,0 +1,383 @@
+python2 des.py 4E6F772069732074 0123456789ABCDEF
+Encrypting plaintext to ciphertext: 01001110 01101111 01110111 00100000 01101001 01110011 00100000 01110100 (0x4e6f772069732074)
+Generating Subkeys:
+    Initial Key = 00000001 00100011 01000101 01100111 10001001 10101011 11001101 11101111 (0x0123456789abcdef)
+    Permuting into Left and Right keys
+    Left Half  = 00001111 00001100 11001010 10100000 (0xf0ccaa0)
+    Right Half = 00001010 10101100 11001111 00000000 (0xaaccf00)
+
+Subkey 0:
+    Shifting key halves to the left by 1 bits
+    Left Half  = 00001110 00011001 10010101 01000001 (0xe199541)
+    Right Half = 00000101 01011001 10011110 00000001 (0x5599e01)
+    Permuting Left and Right key into subkey
+    Subkey = 00001011 00000010 01100111 10011011 01001001 10100101 (0x0b02679b49a5)
+
+Subkey 1:
+    Shifting key halves to the left by 1 bits
+    Left Half  = 00001100 00110011 00101010 10000011 (0xc332a83)
+    Right Half = 00001010 10110011 00111100 00000010 (0xab33c02)
+    Permuting Left and Right key into subkey
+    Subkey = 01101001 10100110 01011001 00100101 01101010 00100110 (0x69a659256a26)
+
+Subkey 2:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000000 11001100 10101010 00001111 (0x0ccaa0f)
+    Right Half = 00001010 11001100 11110000 00001010 (0xaccf00a)
+    Permuting Left and Right key into subkey
+    Subkey = 01000101 11010100 10001010 10110100 00101000 11010010 (0x45d48ab428d2)
+
+Subkey 3:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000011 00110010 10101000 00111100 (0x332a83c)
+    Right Half = 00001011 00110011 11000000 00101010 (0xb33c02a)
+    Permuting Left and Right key into subkey
+    Subkey = 01110010 10001001 11010010 10100101 10000010 01010111 (0x7289d2a58257)
+
+Subkey 4:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00001100 11001010 10100000 11110000 (0xccaa0f0)
+    Right Half = 00001100 11001111 00000000 10101010 (0xccf00aa)
+    Permuting Left and Right key into subkey
+    Subkey = 00111100 11101000 00000011 00010111 10100110 11000010 (0x3ce80317a6c2)
+
+Subkey 5:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000011 00101010 10000011 11000011 (0x32a83c3)
+    Right Half = 00000011 00111100 00000010 10101011 (0x33c02ab)
+    Permuting Left and Right key into subkey
+    Subkey = 00100011 00100101 00011110 00111100 10000101 01000101 (0x23251e3c8545)
+
+Subkey 6:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00001100 10101010 00001111 00001100 (0xcaa0f0c)
+    Right Half = 00001100 11110000 00001010 10101100 (0xcf00aac)
+    Permuting Left and Right key into subkey
+    Subkey = 01101100 00000100 10010101 00001010 11100100 11000110 (0x6c04950ae4c6)
+
+Subkey 7:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000010 10101000 00111100 00110011 (0x2a83c33)
+    Right Half = 00000011 11000000 00101010 10110011 (0x3c02ab3)
+    Permuting Left and Right key into subkey
+    Subkey = 01010111 10001000 00111000 01101100 11100101 10000001 (0x5788386ce581)
+
+Subkey 8:
+    Shifting key halves to the left by 1 bits
+    Left Half  = 00000101 01010000 01111000 01100110 (0x5507866)
+    Right Half = 00000111 10000000 01010101 01100110 (0x7805566)
+    Permuting Left and Right key into subkey
+    Subkey = 11000000 11001001 11101001 00100110 10111000 00111001 (0xc0c9e926b839)
+
+Subkey 9:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000101 01000001 11100001 10011001 (0x541e199)
+    Right Half = 00001110 00000001 01010101 10011001 (0xe015599)
+    Permuting Left and Right key into subkey
+    Subkey = 10010001 11100011 00000111 01100011 00011101 01110010 (0x91e307631d72)
+
+Subkey 10:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000101 00000111 10000110 01100101 (0x5078665)
+    Right Half = 00001000 00000101 01010110 01100111 (0x8055667)
+    Permuting Left and Right key into subkey
+    Subkey = 00100001 00011111 10000011 00001101 10001001 00111010 (0x211f830d893a)
+
+Subkey 11:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000100 00011110 00011001 10010101 (0x41e1995)
+    Right Half = 00000000 00010101 01011001 10011110 (0x015599e)
+    Permuting Left and Right key into subkey
+    Subkey = 01110001 00110000 11100101 01000101 01011100 01010100 (0x7130e5455c54)
+
+Subkey 12:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000000 01111000 01100110 01010101 (0x0786655)
+    Right Half = 00000000 01010101 01100110 01111000 (0x0556678)
+    Permuting Left and Right key into subkey
+    Subkey = 10010001 11000100 11010000 01001001 10000000 11111100 (0x91c4d04980fc)
+
+Subkey 13:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000001 11100001 10011001 01010100 (0x1e19954)
+    Right Half = 00000001 01010101 10011001 11100000 (0x15599e0)
+    Permuting Left and Right key into subkey
+    Subkey = 01010100 01000011 10110110 10000001 11011100 10001101 (0x5443b681dc8d)
+
+Subkey 14:
+    Shifting key halves to the left by 2 bits
+    Left Half  = 00000111 10000110 01100101 01010000 (0x7866550)
+    Right Half = 00000101 01010110 01100111 10000000 (0x5566780)
+    Permuting Left and Right key into subkey
+    Subkey = 10110110 10010001 00000101 00001010 00010110 10110101 (0xb691050a16b5)
+
+Subkey 15:
+    Shifting key halves to the left by 1 bits
+    Left Half  = 00001111 00001100 11001010 10100000 (0xf0ccaa0)
+    Right Half = 00001010 10101100 11001111 00000000 (0xaaccf00)
+    Permuting Left and Right key into subkey
+    Subkey = 11001010 00111101 00000011 10111000 01110000 00110010 (0xca3d03b87032)
+
+Initial Permutation: 10110111 10100100 10000111 00110110 00000000 11111110 00010011 00100111 (0xb7a4873600fe1327)
+
+Round 0:
+    Input:
+        Subkey      = 00001011 00000010 01100111 10011011 01001001 10100101 (0x0b02679b49a5)
+        Left Block  = 10110111 10100100 10000111 00110110 (0xb7a48736)
+        Right Block = 00000000 11111110 00010011 00100111 (0x00fe1327)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 10000000 00010111 11111100 00001010 01101001 00001110 (0x8017fc0a690e)
+       Expanded(...) XOR Subkey= 100010 110001 010110 011011 100100 010010 000010 101011 (0x8b159b9120ab)
+       S-Box(...)= 00011011 01111010 00011101 10111010 (0x1b7a1dba)
+       Permutation(...) (output) = 01111110 01001011 01100100 01001111 (0x7e4b644f)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 11001001 11101111 11100011 01111001 (0xc9efe379)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 1:
+    Input:
+        Subkey      = 01101001 10100110 01011001 00100101 01101010 00100110 (0x69a659256a26)
+        Left Block  = 00000000 11111110 00010011 00100111 (0x00fe1327)
+        Right Block = 11001001 11101111 11100011 01111001 (0xc9efe379)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 11100101 00111111 01011111 11110000 01101011 11110011 (0xe53f5ff06bf3)
+       Expanded(...) XOR Subkey= 100011 001001 100100 000110 110101 010000 000111 010101 (0x8c9906d501d5)
+       S-Box(...)= 11001111 01000011 00000000 01110110 (0xcf430076)
+       Permutation(...) (output) = 11000010 11011011 11000100 00110000 (0xc2dbc430)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 11000010 00100101 11010111 00010111 (0xc225d717)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 2:
+    Input:
+        Subkey      = 01000101 11010100 10001010 10110100 00101000 11010010 (0x45d48ab428d2)
+        Left Block  = 11001001 11101111 11100011 01111001 (0xc9efe379)
+        Right Block = 11000010 00100101 11010111 00010111 (0xc225d717)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 11100000 01000001 00001011 11101010 11101000 10101111 (0xe0410beae8af)
+       Expanded(...) XOR Subkey= 101001 011001 010110 000001 010111 101100 000001 111101 (0xa595815ec07d)
+       S-Box(...)= 01000110 01111101 10101100 11010110 (0x467dacd6)
+       Permutation(...) (output) = 11010111 00010011 10010000 11111101 (0xd71390fd)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 00011110 11111100 01110011 10000100 (0x1efc7384)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 3:
+    Input:
+        Subkey      = 01110010 10001001 11010010 10100101 10000010 01010111 (0x7289d2a58257)
+        Left Block  = 11000010 00100101 11010111 00010111 (0xc225d717)
+        Right Block = 00011110 11111100 01110011 10000100 (0x1efc7384)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 00001111 11010111 11111000 00111010 01111100 00001000 (0x0fd7f83a7c08)
+       Expanded(...) XOR Subkey= 011111 010101 111000 101010 100111 111111 111001 011111 (0x7d5e2a9ffe5f)
+       S-Box(...)= 10000001 01011011 01111101 11100010 (0x815b7de2)
+       Permutation(...) (output) = 10110100 11010111 01100100 11001001 (0xb4d764c9)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 01110110 11110010 10110011 11011110 (0x76f2b3de)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 4:
+    Input:
+        Subkey      = 00111100 11101000 00000011 00010111 10100110 11000010 (0x3ce80317a6c2)
+        Left Block  = 00011110 11111100 01110011 10000100 (0x1efc7384)
+        Right Block = 01110110 11110010 10110011 11011110 (0x76f2b3de)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 00111010 11010111 10100101 01011010 01111110 11111100 (0x3ad7a55a7efc)
+       Expanded(...) XOR Subkey= 000001 100011 111110 100110 010011 011101 100000 111110 (0x063fa64dd83e)
+       S-Box(...)= 00001000 01110000 00000011 00011000 (0x08700318)
+       Permutation(...) (output) = 00001110 00101001 00100000 00000100 (0x0e292004)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 00010000 11010101 01010011 10000000 (0x10d55380)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 5:
+    Input:
+        Subkey      = 00100011 00100101 00011110 00111100 10000101 01000101 (0x23251e3c8545)
+        Left Block  = 01110110 11110010 10110011 11011110 (0x76f2b3de)
+        Right Block = 00010000 11010101 01010011 10000000 (0x10d55380)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 00001010 00010110 10101010 10101010 01111100 00000000 (0x0a16aaaa7c00)
+       Expanded(...) XOR Subkey= 001010 010011 001110 110100 100101 101111 100101 000101 (0x2933b496f945)
+       S-Box(...)= 11110000 01010011 11001010 11011101 (0xf053cadd)
+       Permutation(...) (output) = 10011111 11110101 10001010 00100011 (0x9ff58a23)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 11101001 00000111 00111001 11111101 (0xe90739fd)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 6:
+    Input:
+        Subkey      = 01101100 00000100 10010101 00001010 11100100 11000110 (0x6c04950ae4c6)
+        Left Block  = 00010000 11010101 01010011 10000000 (0x10d55380)
+        Right Block = 11101001 00000111 00111001 11111101 (0xe90739fd)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 11110101 00101000 00001110 10011111 00111111 11111011 (0xf5280e9f3ffb)
+       Expanded(...) XOR Subkey= 100110 010010 110010 011011 100101 011101 101100 111101 (0x992c9b95db3d)
+       S-Box(...)= 10000111 00011010 11000011 01110110 (0x871ac376)
+       Permutation(...) (output) = 01000111 11110110 01100100 01110000 (0x47f66470)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 01010111 00100011 00110111 11110000 (0x572337f0)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 7:
+    Input:
+        Subkey      = 01010111 10001000 00111000 01101100 11100101 10000001 (0x5788386ce581)
+        Left Block  = 11101001 00000111 00111001 11111101 (0xe90739fd)
+        Right Block = 01010111 00100011 00110111 11110000 (0x572337f0)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 00101010 11101001 00000110 10011010 11111111 10100000 (0x2ae9069affa0)
+       Expanded(...) XOR Subkey= 011111 010110 000100 111110 111101 100001 101000 100001 (0x7d613ef61a21)
+       S-Box(...)= 10001101 10010100 01010100 11000010 (0x8d9454c2)
+       Permutation(...) (output) = 00100100 10011110 01010001 00011001 (0x249e5119)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 11001101 10011001 01101000 11100100 (0xcd9968e4)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 8:
+    Input:
+        Subkey      = 11000000 11001001 11101001 00100110 10111000 00111001 (0xc0c9e926b839)
+        Left Block  = 01010111 00100011 00110111 11110000 (0x572337f0)
+        Right Block = 11001101 10011001 01101000 11100100 (0xcd9968e4)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 01100101 10111100 11110010 10110101 00010111 00001001 (0x65bcf2b51709)
+       Expanded(...) XOR Subkey= 101001 010111 010100 011011 100100 111010 111100 110000 (0xa5751b93af30)
+       S-Box(...)= 01001010 11001010 00011101 10010000 (0x4aca1d90)
+       Permutation(...) (output) = 01110010 01001001 10100001 01001001 (0x7249a149)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 00100101 01101010 10010110 10111001 (0x256a96b9)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 9:
+    Input:
+        Subkey      = 10010001 11100011 00000111 01100011 00011101 01110010 (0x91e307631d72)
+        Left Block  = 11001101 10011001 01101000 11100100 (0xcd9968e4)
+        Right Block = 00100101 01101010 10010110 10111001 (0x256a96b9)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 10010000 10101011 01010101 01001010 11010101 11110010 (0x90ab554ad5f2)
+       Expanded(...) XOR Subkey= 000000 010100 100001 010010 001010 011100 100010 000000 (0x01485229c880)
+       S-Box(...)= 11100010 00010010 10100101 01001101 (0xe212a54d)
+       Permutation(...) (output) = 01001101 11010000 10101010 10101000 (0x4dd0aaa8)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 10000000 01001001 11000010 01001100 (0x8049c24c)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 10:
+    Input:
+        Subkey      = 00100001 00011111 10000011 00001101 10001001 00111010 (0x211f830d893a)
+        Left Block  = 00100101 01101010 10010110 10111001 (0x256a96b9)
+        Right Block = 10000000 01001001 11000010 01001100 (0x8049c24c)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 01000000 00000010 01010011 11100000 01000010 01011001 (0x400253e04259)
+       Expanded(...) XOR Subkey= 011000 010001 110111 010000 111011 011100 101101 100011 (0x611dd0edcb63)
+       S-Box(...)= 01011100 00110001 01000101 10100001 (0x5c3145a1)
+       Permutation(...) (output) = 10000100 00001100 10101100 00011111 (0x840cac1f)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 10100001 01100110 00111010 10100110 (0xa1663aa6)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 11:
+    Input:
+        Subkey      = 01110001 00110000 11100101 01000101 01011100 01010100 (0x7130e5455c54)
+        Left Block  = 10000000 01001001 11000010 01001100 (0x8049c24c)
+        Right Block = 10100001 01100110 00111010 10100110 (0xa1663aa6)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 01010000 00101011 00001100 00011111 01010101 00001101 (0x502b0c1f550d)
+       Expanded(...) XOR Subkey= 001000 010001 101111 101001 010110 100000 100101 011001 (0x211be95a0959)
+       S-Box(...)= 00101100 01111010 11111001 11010000 (0x2c7af9d0)
+       Permutation(...) (output) = 00110111 01011101 00100010 11010101 (0x375d22d5)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 10110111 00010100 11100000 10011001 (0xb714e099)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 12:
+    Input:
+        Subkey      = 10010001 11000100 11010000 01001001 10000000 11111100 (0x91c4d04980fc)
+        Left Block  = 10100001 01100110 00111010 10100110 (0xa1663aa6)
+        Right Block = 10110111 00010100 11100000 10011001 (0xb714e099)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 11011010 11101000 10101001 01110000 00010100 11110011 (0xdae8a97014f3)
+       Expanded(...) XOR Subkey= 010010 110010 110001 111001 001110 011001 010000 001111 (0x4b2c7939940f)
+       S-Box(...)= 10101000 01001100 01100000 00110100 (0xa84c6034)
+       Permutation(...) (output) = 00000010 10001101 00010110 11100000 (0x028d16e0)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 10100011 11101011 00101100 01000110 (0xa3eb2c46)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 13:
+    Input:
+        Subkey      = 01010100 01000011 10110110 10000001 11011100 10001101 (0x5443b681dc8d)
+        Left Block  = 10110111 00010100 11100000 10011001 (0xb714e099)
+        Right Block = 10100011 11101011 00101100 01000110 (0xa3eb2c46)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 01010000 01111111 01010110 10010101 10000010 00001101 (0x507f5695820d)
+       Expanded(...) XOR Subkey= 000001 000011 110011 100000 000101 000101 111010 000000 (0x043ce0145e80)
+       S-Box(...)= 00001101 11111010 00100100 01011101 (0x0dfa245d)
+       Permutation(...) (output) = 00001110 01011001 01001001 11111100 (0x0e5949fc)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 10111001 01001101 10101001 01100101 (0xb94da965)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 14:
+    Input:
+        Subkey      = 10110110 10010001 00000101 00001010 00010110 10110101 (0xb691050a16b5)
+        Left Block  = 10100011 11101011 00101100 01000110 (0xa3eb2c46)
+        Right Block = 10111001 01001101 10101001 01100101 (0xb94da965)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 11011111 00101010 01011011 11010101 00101011 00001011 (0xdf2a5bd52b0b)
+       Expanded(...) XOR Subkey= 011010 011011 101101 011110 110111 110011 110110 111110 (0x69bb5edf3dbe)
+       S-Box(...)= 10011001 10001111 10011110 10001000 (0x998f9e88)
+       Permutation(...) (output) = 10111001 11101000 01010001 01001011 (0xb9e8514b)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 00011010 00000011 01111101 00001101 (0x1a037d0d)
+        Right Block (Unchanged)
+    Left and Right blocks are switched and input into next round.
+
+Round 15:
+    Input:
+        Subkey      = 11001010 00111101 00000011 10111000 01110000 00110010 (0xca3d03b87032)
+        Left Block  = 10111001 01001101 10101001 01100101 (0xb94da965)
+        Right Block = 00011010 00000011 01111101 00001101 (0x1a037d0d)
+       Feistel(Right Block, Subkey):
+       Expand(Right Block)= 10001111 01000000 00000110 10111111 10101000 01011010 (0x8f4006bfa85a)
+       Expanded(...) XOR Subkey= 010001 010111 110100 000101 000001 111101 100001 101000 (0x457d0507d868)
+       S-Box(...)= 10101010 00101011 11101000 01101001 (0xaa2be869)
+       Permutation(...) (output) = 11011001 11011100 00001110 11000100 (0xd9dc0ec4)
+    Output:
+        Left Block = Left Block XOR Feistel(...)
+                   = 01100000 10010001 10100111 10100001 (0x6091a7a1)
+        Right Block (Unchanged)
+    DO NOT SWITCH right and left block after the last round
+
+Result after all rounds = Left Block + Right Block
+                        = 01100000 10010001 10100111 10100001 00011010 00000011 01111101 00001101 (0x6091a7a11a037d0d)
+After Final Permutation = 00111111 10100100 00001110 10001010 10011000 01001101 01001000 00010101 (0x3fa40e8a984d4815)
+
+3fa40e8a984d4815
