@@ -46,7 +46,7 @@ end function;
 
 // Der zu uebergebene Vektor muss eine laenge von 48 haben
 // da ansonsten das mehrdimensionale Array ret mit falschen
-// Werten befüllt wird.
+// Werten befÃ¼llt wird.
 // Getestet kann diese Funktion mit Hilfe des Testvektors aus K:=FiniteField(2) 
 // werden mit a:=[K!i: i in [1..48]];
 
@@ -59,7 +59,7 @@ substitution:=function(vec)
 	// S-Box uebergeben bekommt und dann die entsprechende Zeile und zum 
 	// Schluss die entsprechende Spalte
 	// Beispiel: S["S1"][[0,0]][[0,1,0,1]]; -> liefert den Wert der ersten S-Box
-	// für die erste Zeile und das 9. Element. Rueckgabewert ist ein Element 
+	// fÃ¼r die erste Zeile und das 9. Element. Rueckgabewert ist ein Element 
 	// aus dem V4:=VectorSpace(FiniteField(2), 4);
 
 	for iter in [1..#keys] do
@@ -133,7 +133,7 @@ expandVec:=function(vec)
 end function;
 
 // Eine Hilfsfunktionen, falls vec*M nicht funktioniert. Vektor-Matrix-Produkt. Uebergeben
-// wird der Vektor, die Matrix und der Koerper, über dem die Multiplication vollzogen 
+// wird der Vektor, die Matrix und der Koerper, Ã¼ber dem die Multiplication vollzogen 
 // werden soll.
 
 vecMatrixProduct:=function(vec, Mat, K)
@@ -151,7 +151,7 @@ vecMatrixProduct:=function(vec, Mat, K)
 end function;
 
 // Hier wird die eigtl. innere Funktion abgedeckt. Dabei wird zuerst der Vektor erweitert,
-// dann der Schlüssel auf den expandierten Vektor draufaddiert. Diese Summe wird dann sub-
+// dann der SchlÃ¼ssel auf den expandierten Vektor draufaddiert. Diese Summe wird dann sub-
 // tituiert und zum Schluss noch mit P (wobei p aus tables.magam stammt) permutiert. Es 
 // wird hierbei der rechte Subvektor der Laenge 32 uebergeben und man erhaelt den neuen
 // linken Subvektor auch wieder von der Laenge 32.
