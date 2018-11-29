@@ -4,10 +4,10 @@ keyscheduling:=function(inputkey)
 	
 	v:=[1..16 by 1];
 	for i := 1 to 16 do
-		if i ne [1,2,9,16] then 
+		if i eq 1 or i eq 2 or i eq  9 or i eq 16 then 
 			v[i]:=1;
 		else
-			v[i]:=0;
+			v[i]:=2;
 		end if;
 	end for;
 
@@ -35,18 +35,18 @@ keyscheduling:=function(inputkey)
 	KEYS:=["K1","K2","K3","K4","K5","K6","K7","K8","K9","K10","K11","K12","K13","K14","K15","K16"];
 	
 	
-	val:=[0 to 16 by 1];
-	val1:=[1 to 16 by 1];
-	S[keysC[0]]:=C0;
-	S[keysD[0]]:=D0;
+	val:=[1..17 by 1];
+	val1:=[2..17 by 1];
+	S[keysC[1]]:=C0;
+	S[keysD[1]]:=D0;
 	
-	for i:= 1 to 16 do
+	for i:= 2 to 17 do
 		S[keysC[i]]:=Rotate(S[keysC[i-1]], -v[i]);
 		S[keysD[i]]:=Rotate(S[keysD[i-1]], -v[i]);
 		S[KEYS[i]]:=(S[keysC[i]] cat S[keysD[i]]) ^PC2;
 	end for;
 	
-	outputkeys:=S[KEYS[val1];
+	outputkeys:=[S[KEYS[i]]: i in [2..17]];
 	return outputkeys;
 	
 end function;
