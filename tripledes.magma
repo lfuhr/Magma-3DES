@@ -28,7 +28,7 @@ end function;
 function enc_DES(key, input : dec:=false)
 	L0R0 := input^IP;
 	L := Submatrix(L0R0, 1, 1, 1, 32);
-	R := Submatrix(L0R0, 1, 1, 33, 64);
+	R := Submatrix(L0R0, 1, 33, 1, 32);
 	keys := generate_keys(key);
 
 	if dec then
