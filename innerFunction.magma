@@ -1,4 +1,4 @@
-// Kolodziej Marco 
+﻿// Kolodziej Marco 
 // Implementierungsvorschlag der inneren Funktion des Data Encryption Standard
 
 load "tables.magma";
@@ -167,7 +167,7 @@ inner_f:=function(right, key)
 	G32:=Sym(32);
 	P:=G32!p;
 
-	left:=ex_right_keyadd_subs^P;
+	left:=ex_right_keyadd_subs^Inverse(P);
 
 	return left;
 
