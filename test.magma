@@ -1,6 +1,4 @@
-K := "0123456789ABCDEF";
-P := "4E6F772069732074";//68652074696D6520666F7220616C6C20";
-C := "3FA40E8A984D4815";//6A271787AB8883F9893D51EC4B563B53";
+load "tripledes.magma";
 
 // Fuhr
 function hex_to_bitvector(hex)
@@ -31,8 +29,13 @@ function bitvector_to_hex(bitvector)
 end function;
 // bitvector_to_hex(hex_to_bitvector("00CAFE00"));
 
-load "tripledes.magma";
-bitvector_to_hex( enc_DES(hex_to_bitvector(K),hex_to_bitvector(P)));
+K := hex_to_bitvector("0123456789ABCDEF");
+P := hex_to_bitvector("4E6F772069732074");//68652074696D6520666F7220616C6C20";
+C := hex_to_bitvector("3FA40E8A984D4815");//6A271787AB8883F9893D51EC4B563B53";
+
+c := enc_DES(K,P);
+bitvector_to_hex( c );
+bitvector_to_hex( dec_DES(  c , K ));
 
 function enc_tripple_DES_openSSL()
 end function;

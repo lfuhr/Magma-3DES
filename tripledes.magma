@@ -55,7 +55,6 @@ function enc_DES(key, input : dec:=false)
 		R_old := R;
 		L := R_old;
 		R := L_old + inner_f(R_old, keys[i]);
-		i; R + L_old;
     end for;
 
     return Vector(HorizontalJoin(R, L)^IP_INVERSE);
