@@ -1,4 +1,4 @@
-﻿// Kolodziej Marco
+// Kolodziej Marco
 // Implementierungsvorschlag der inneren Funktion des Data Encryption Standard
 
 load "tables.magma";

@@ -14,7 +14,7 @@ load "innerFunction.magma";
 // IP_INVERSE natürlich analog.
 
 G64:=Sym(64);
-IP_INVERSE:=G64!ip; // Magma behavior
+IP_INVERSE:=G64!ip; // Uncanny Magma behavior
 IP:=Inverse(IP_INVERSE);
 
 function key_schedule(key)
@@ -39,7 +39,7 @@ function key_schedule(key)
 end function;
 
 // Fuhr
-function enc_DES(key, input : dec:=false)
+function enc_DES(input, key : dec:=false)
 	L0R0 := input^IP;
 	L := Vector(Submatrix(L0R0, 1, 1, 1, 32));
 	R := Vector(Submatrix(L0R0, 1, 33, 1, 32));
@@ -47,7 +47,7 @@ function enc_DES(key, input : dec:=false)
 
 	if dec then
 		// R is left side  and  L is right side.
-		keys = Reverse(keys);
+		keys := Reverse(keys);
 	end if;
 
 	for i in [1 .. 16] do
@@ -61,15 +61,16 @@ function enc_DES(key, input : dec:=false)
 end function;
 
 // Fuhr
-function dec_DES(key, input)
-	return enc_DES(key, input : dec:=true);
+function dec_DES(input, key)
+	return enc_DES(input, key : dec:=true);
 end function;
 
-function enc_triple_DES(input, k1, k2, k3)
-	return enc_DES(k3, dec_DES( k2, enc_DES(k1, input)));
+// Fuhr
+function enc_triple_DES(plaintext, k1, k2, k3)
+	return enc_DES(dec_DES(enc_DES(plaintext, k1), k2), k3);
 end function;
 
-function dec_triple_DES(input, k1, k2, k3)
-	return dec_DES(k1, enc_DES( k2, dec_DES(k3, input)));
+// Fuhr
+function dec_triple_DES(cipher, k1, k2, k3)
+	return dec_DES(enc_DES(dec_DES(cipher, k3), k2), k1);
 end function;
-

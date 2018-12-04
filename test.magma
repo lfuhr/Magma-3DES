@@ -1,4 +1,5 @@
 load "tripledes.magma";
+load "Hilfsfunktionen.mg";
 
 // Fuhr
 function hex_to_bitvector(hex)
@@ -29,26 +30,58 @@ function bitvector_to_hex(bitvector)
 end function;
 // bitvector_to_hex(hex_to_bitvector("00CAFE00"));
 
-K := hex_to_bitvector("0123456789ABCDEF");
-P := hex_to_bitvector("4E6F772069732074");//68652074696D6520666F7220616C6C20";
-C := hex_to_bitvector("3FA40E8A984D4815");//6A271787AB8883F9893D51EC4B563B53";
+K_hex := "0123456789ABCDEF"; K := hex_to_bitvector(K_hex);
+P_hex := "4E6F772069732074"; P := hex_to_bitvector(P_hex);
+C_hex := "3FA40E8A984D4815"; C := hex_to_bitvector(C_hex);
 
-c := enc_DES(K,P);
-bitvector_to_hex( c );
-bitvector_to_hex( dec_DES(  c , K ));
-
-function enc_tripple_DES_openSSL()
-end function;
-
-function dec_tripple_DES_openSSL()
-end function;
-
-// Fuhr enc_DES_openSSL(K, P)
-function enc_DES_openSSL(key, input)
-	WriteHex(P, "plaintext");
-	System("openssl enc -des-ecb -K -in plaintext -out cipher");
+// Fuhr
+function enc_triple_DES_openSSL(plaintext, key)
+	WriteHex(plaintext, "plaintext");
+	System("openssl enc -des-ede3 -nopad -K " cat key cat " -in plaintext -out cipher");
 	return ReadHex("cipher");
 end function;
 
-function dec_DES_openSSL(key, input)
+// Fuhr
+function dec_triple_DES_openSSL(cipher, key)
+	WriteHex(cipher, "plaintext");
+	System("openssl enc -des-ede3 -nopad -K " cat key cat " -in plaintext -out plaintext");
+	return ReadHex("plaintext");
 end function;
+
+// Fuhr
+function enc_DES_openSSL(plaintext, key)
+	WriteHex(plaintext, "plaintext");
+	System("openssl enc -des -nopad -K " cat key cat " -in plaintext -out cipher");
+	return ReadHex("cipher");
+end function;
+
+// Fuhr
+function dec_DES_openSSL(cipher, key)
+	WriteHex(cipher, "plaintext");
+	System("openssl enc -des -nopad -K " cat key cat " -in plaintext -out plaintext");
+	return ReadHex("plaintext");
+end function;
+
+// Fuhr: Auskommentierte Funktionsaufrufe
+
+// // Des using Vectors of book
+// c := enc_DES( P, K );
+// "Chiffrat:"; bitvector_to_hex( c );
+// "Plaintext:"; bitvector_to_hex( dec_DES( c, K ) );
+
+// // Triple Des
+// V64:= VectorSpace(GF(2), 64);
+// K1 := Random(V64); K2 := Random(V64); K3 := Random(V64);
+// c := enc_triple_DES(P, K1, K2, K3);
+// "Chiffrat:"; bitvector_to_hex( c );
+// "Plaintext:"; bitvector_to_hex( dec_triple_DES( c, K1, K2, K3 ) );
+
+// // OpenSSL DES
+// c := enc_DES_openSSL(P_hex, K_hex);
+// c;
+// c := IntegerToString(StringToInteger(c, 16), 16); // Uppercase
+// C_hex eq c;
+
+// // OpenSSL DES as special case of 3DES
+// c := enc_triple_DES_openSSL(P_hex, K_hex cat K_hex cat K_hex);
+// c;
