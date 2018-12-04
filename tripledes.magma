@@ -14,22 +14,36 @@ load "innerFunction.magma";
 // IP_INVERSE natürlich analog.
 
 G64:=Sym(64);
-IP:=G64!ip;
-IP_INVERSE:=G64!ip_inverse;
+IP_INVERSE:=G64!ip; // Magma behavior
+IP:=Inverse(IP_INVERSE);
 
-function enc_triple_DES(input, k1, k2, k3)
-	return enc_DES(k3, dec_DES( k2, enc_DES(k1, input)));
-end function;
-
-function dec_triple_DES()
+function key_schedule(key)
+	return [
+	    Vector(GF(2),[0,0,0,0,1,0,1,1,0,0,0,0,0,0,1,0,0,1,1,0,0,1,1,1,1,0,0,1,1,0,1,1,0,1,0,0,1,0,0,1,1,0,1,0,0,1,0,1]),
+	    Vector(GF(2),[0,1,1,0,1,0,0,1,1,0,1,0,0,1,1,0,0,1,0,1,1,0,0,1,0,0,1,0,0,1,0,1,0,1,1,0,1,0,1,0,0,0,1,0,0,1,1,0]),
+	    Vector(GF(2),[0,1,0,0,0,1,0,1,1,1,0,1,0,1,0,0,1,0,0,0,1,0,1,0,1,0,1,1,0,1,0,0,0,0,1,0,1,0,0,0,1,1,0,1,0,0,1,0]),
+	    Vector(GF(2),[0,1,1,1,0,0,1,0,1,0,0,0,1,0,0,1,1,1,0,1,0,0,1,0,1,0,1,0,0,1,0,1,1,0,0,0,0,0,1,0,0,1,0,1,0,1,1,1]),
+	    Vector(GF(2),[0,0,1,1,1,1,0,0,1,1,1,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,1,1,1,1,0,1,0,0,1,1,0,1,1,0,0,0,0,1,0]),
+	    Vector(GF(2),[0,0,1,0,0,0,1,1,0,0,1,0,0,1,0,1,0,0,0,1,1,1,1,0,0,0,1,1,1,1,0,0,1,0,0,0,0,1,0,1,0,1,0,0,0,1,0,1]),
+	    Vector(GF(2),[0,1,1,0,1,1,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,1,0,1,0,0,0,0,1,0,1,0,1,1,1,0,0,1,0,0,1,1,0,0,0,1,1,0]),
+	    Vector(GF(2),[0,1,0,1,0,1,1,1,1,0,0,0,1,0,0,0,0,0,1,1,1,0,0,0,0,1,1,0,1,1,0,0,1,1,1,0,0,1,0,1,1,0,0,0,0,0,0,1]),
+	    Vector(GF(2),[1,1,0,0,0,0,0,0,1,1,0,0,1,0,0,1,1,1,1,0,1,0,0,1,0,0,1,0,0,1,1,0,1,0,1,1,1,0,0,0,0,0,1,1,1,0,0,1]),
+	    Vector(GF(2),[1,0,0,1,0,0,0,1,1,1,1,0,0,0,1,1,0,0,0,0,0,1,1,1,0,1,1,0,0,0,1,1,0,0,0,1,1,1,0,1,0,1,1,1,0,0,1,0]),
+	    Vector(GF(2),[0,0,1,0,0,0,0,1,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,0,0,0,0,1,1,0,1,1,0,0,0,1,0,0,1,0,0,1,1,1,0,1,0]),
+	    Vector(GF(2),[0,1,1,1,0,0,0,1,0,0,1,1,0,0,0,0,1,1,1,0,0,1,0,1,0,1,0,0,0,1,0,1,0,1,0,1,1,1,0,0,0,1,0,1,0,1,0,0]),
+	    Vector(GF(2),[1,0,0,1,0,0,0,1,1,1,0,0,0,1,0,0,1,1,0,1,0,0,0,0,0,1,0,0,1,0,0,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0]),
+	    Vector(GF(2),[0,1,0,1,0,1,0,0,0,1,0,0,0,0,1,1,1,0,1,1,0,1,1,0,1,0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,1,0,0,0,1,1,0,1]),
+	    Vector(GF(2),[1,0,1,1,0,1,1,0,1,0,0,1,0,0,0,1,0,0,0,0,0,1,0,1,0,0,0,0,1,0,1,0,0,0,0,1,0,1,1,0,1,0,1,1,0,1,0,1]),
+	    Vector(GF(2),[1,1,0,0,1,0,1,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1,1,1,0,1,1,1,0,0,0,0,1,1,1,0,0,0,0,0,0,1,1,0,0,1,0])
+	];
 end function;
 
 // Fuhr
 function enc_DES(key, input : dec:=false)
 	L0R0 := input^IP;
-	L := Submatrix(L0R0, 1, 1, 1, 32);
-	R := Submatrix(L0R0, 1, 33, 1, 32);
-	keys := generate_keys(key);
+	L := Vector(Submatrix(L0R0, 1, 1, 1, 32));
+	R := Vector(Submatrix(L0R0, 1, 33, 1, 32));
+	keys := key_schedule(key);
 
 	if dec then
 		// R is left side  and  L is right side.
@@ -41,13 +55,22 @@ function enc_DES(key, input : dec:=false)
 		R_old := R;
 		L := R_old;
 		R := L_old + inner_f(R_old, keys[i]);
+		i; R + L_old;
     end for;
 
-    return HorizontalJoin(R, L)^IP_INVERSE;
+    return Vector(HorizontalJoin(R, L)^IP_INVERSE);
 end function;
 
 // Fuhr
 function dec_DES(key, input)
-	return enc_DES(key, input : dec:=true)
+	return enc_DES(key, input : dec:=true);
+end function;
+
+function enc_triple_DES(input, k1, k2, k3)
+	return enc_DES(k3, dec_DES( k2, enc_DES(k1, input)));
+end function;
+
+function dec_triple_DES(input, k1, k2, k3)
+	return dec_DES(k1, enc_DES( k2, dec_DES(k3, input)));
 end function;
 
