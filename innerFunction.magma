@@ -50,21 +50,28 @@ end function;
 // Getestet kann diese Funktion mit Hilfe des Testvektors aus K:=FiniteField(2)
 // werden mit a:=[K!i: i in [1..48]];
 
-substitution:=function(vec)
-	S:=AssociativeArray();
-	keys:=["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8"];
+
+initSubBoxes := function()
+	S:=[];
 	val:=[s1, s2, s3, s4, s5, s6, s7, s8];
 
 	// Initialisierung der Map die als Eingangswerte die entsprechende
 	// S-Box uebergeben bekommt und dann die entsprechende Zeile und zum
 	// Schluss die entsprechende Spalte
-	// Beispiel: S["S1"][[0,0]][[0,1,0,1]]; -> liefert den Wert der ersten S-Box
+	// Beispiel: S[1][[0,0]][[0,1,0,1]]; -> liefert den Wert der ersten S-Box
 	// für die erste Zeile und das 9. Element. Rueckgabewert ist ein Element
 	// aus dem V4:=VectorSpace(FiniteField(2), 4);
 
-	for iter in [1..#keys] do
-		S[keys[iter]]:=initSubBox(val[iter]);
+	for iter in [1..#val] do
+		S[iter]:=initSubBox(val[iter]);
 	end for;
+	return S;
+end function;
+S := initSubBoxes();
+
+
+substitution:=function(vec)
+
 
 	// Hier wird der Vektor vec in 8 gleich lange Subvektoren zuerschnitten
 	subs:=[];
@@ -85,7 +92,7 @@ substitution:=function(vec)
 	for sub_vec in [1..#subs] do
 		row:=[subs[sub_vec][1], subs[sub_vec][6]];
 		col:=[subs[sub_vec][2], subs[sub_vec][3], subs[sub_vec][4], subs[sub_vec][5]];
-		res[sub_vec]:=S[keys[sub_vec]][row][col];
+		res[sub_vec]:=S[sub_vec][row][col];
 	end for;
 
 	K:=FiniteField(2);
@@ -113,22 +120,29 @@ end function;
 // ein vec-Matrix Produkt die expansion des Vektors beschreiben. Uebergeben wird hier ein Vek-
 // tor aus V32:=VectorSpace(K, 32) und man erhaelt einen Vektor aus V48:=VectorSpace(K, 48).
 
+generateExpander:=function()
+    K:=FiniteField(2);
+    one:=K!1;
+    V48:=VectorSpace(K, 48);
+
+    // Matrix mit Nullen aus K:=FiniteField(2) erzeugen
+    // Es wird eine 32 Zeilen und 48 Spalten Matrix erzeugt,
+    // da wir einen Zeilenvektor der Form 1x32 erhalten
+    M:=ZeroMatrix(K, 32, 48);
+
+    for iter in [1..#e] do
+        M[e[iter], iter]:=one;
+    end for;
+
+    return M;
+end function;
+expander_matrix := generateExpander();
+
+
 expandVec:=function(vec)
-	K:=FiniteField(2);
-	one:=K!1;
-	V48:=VectorSpace(K, 48);
-
-	// Matrix mit Nullen aus K:=FiniteField(2) erzeugen
-	// Es wird eine 32 Zeilen und 48 Spalten Matrix erzeugt,
-	// da wir einen Zeilenvektor der Form 1x32 erhalten
-	M:=ZeroMatrix(K, 32, 48);
-
-	for iter in [1..#e] do
-		M[e[iter], iter]:=one;
-	end for;
 
 	// return V48!vecMatrixProduct(vec, M, K);
-	return vec*M;
+	return vec*expander_matrix;
 
 end function;
 
