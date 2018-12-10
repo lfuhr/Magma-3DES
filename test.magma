@@ -64,10 +64,11 @@ end function;
 
 // Fuhr: Auskommentierte Funktionsaufrufe
 
-// // Des using Vectors of book
-// c := enc_DES( P, K );
-// "Chiffrat:"; bitvector_to_hex( c );
-// "Plaintext:"; bitvector_to_hex( dec_DES( c, K ) );
+// Des using Vectors of book
+c := enc_DES( P, K );
+"Plaintext:"; P_hex;
+"Chiffrat:"; bitvector_to_hex( c );
+"Plaintext again:"; bitvector_to_hex( dec_DES( c, K ) );
 
 // // Triple Des
 // V64:= VectorSpace(GF(2), 64);

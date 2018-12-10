@@ -1,6 +1,6 @@
-// load "file_read.magma";
 load "tables.magma";
 load "innerFunction.magma";
+load "keyscheduling.magma";
 
 // Marco Kolodziej
 // Laden der Permutationen aus G64
@@ -12,7 +12,6 @@ load "innerFunction.magma";
 // ElementarBeispiel: t2:=[i: i in [1..64]];
 // t2^IP; -> Werte stehen in der Reihenfolge wie in der Tabelle aus fips für IP
 // IP_INVERSE natürlich analog.
-
 G64:=Sym(64);
 IP_INVERSE:=G64!ip; // Uncanny Magma behavior
 IP:=Inverse(IP_INVERSE);
@@ -43,6 +42,7 @@ function enc_DES(input, key : dec:=false)
 	L0R0 := input^IP;
 	L := Vector(Submatrix(L0R0, 1, 1, 1, 32));
 	R := Vector(Submatrix(L0R0, 1, 33, 1, 32));
+	// keys := keyscheduling(key);
 	keys := key_schedule(key);
 
 	if dec then
