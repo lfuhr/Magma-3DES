@@ -1,0 +1,78 @@
+load "tables.magma";
+//inputkey ist 64 bit lang
+keyscheduling:=function(inputkey)
+
+	
+	v:=[1..16 by 1];
+	for i := 1 to 16 do
+		if i eq 1 or i eq 2 or i eq  9 or i eq 16 then 
+			v[i]:=1;
+		else
+			v[i]:=2;
+		end if;
+	end for;
+
+
+	//=Sym(64);
+//ElementToSequence(g) entspricht Transformation von Permutation zu Folge
+
+
+	
+	
+	//PC1:=G! (1,57,8) (2,49,29,63,16) (3,41,30,55,12,34,23,11,42,22,19,43,14,18,51,13,26,52,5,25,60,24) (4,33,31,47,45,61,56)(32,39,46,53,28,36,7,9,58)(40,38,54,20,35,15,10,50,21,27,44,6,17,59)(48,37,62) ;
+	M:=VectorSpace(FiniteField(2),28);
+	f:=Random(M);
+	G:=VectorSpace(FiniteField(2),56);
+	t:=Random(G);
+	for i:= 1 to 56 do
+		t[i]:=inputkey[PC1[i]];
+	end for;
+	//D0:=[1..28 by 1];  zweiten 16 Bits von PC1
+	//C0:=[1..28 by 1]; erste 16 Bits von PC1
+	D0:=f;
+	C0:=f;
+	//t:=inputkey^PC1;	
+	for i:= 1 to 28 do
+		D0[i]:=t[i+28];
+		C0[i]:=t[i]; 
+	end for;
+
+	//PC2:=G! (9,15,12,10,6,5,1,14,19,16,4,24,2,17,26,52)( 22,20,7,3,11,21,27,31,30,55) (8,28,37,44,42,53,18) (13,23) (25,41,34,45,50) (43,46,36,48,32,40,56) (33,51,35) (38,49) (47,29) ;
+    
+	//Rotate(D0,-1 ) entspricht Shift um 1 nach links!!
+	
+	S:=AssociativeArray();
+	keysD:=["D0","D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8","D9","D10","D11","D12","D13","D14","D15","D16"];
+	keysC:=["C0","C1", "C2", "C3", "C4", "C5", "C6", "C7", "C8","C9","C10","C11","C12","C13","C14","C15","C16"];
+	KEYS:=["K0","K1","K2","K3","K4","K5","K6","K7","K8","K9","K10","K11","K12","K13","K14","K15","K16"];
+	
+	
+	val:=[1..17 by 1];
+	val1:=[2..17 by 1];
+	S[keysC[1]]:=C0;
+	S[keysD[1]]:=D0;
+	V:=VectorSpace(FiniteField(2), 48);
+	e:=Random(V);
+	
+	for i:= 2 to 17 do
+		S[keysC[i]]:=Rotate(S[keysC[i-1]], -v[i-1]);
+		S[keysD[i]]:=Rotate(S[keysD[i-1]], -v[i-1]);
+		//S[KEYS[i]]:=HorizontalJoin(S[keysC[i]],S[keysD[i]]) ^PC2;
+		Zwischenergebnis:=HorizontalJoin(S[keysC[i]],S[keysD[i]]);
+		//Zwischenergebnis wird seltsamerweise als Folge ohne Ordnungsrelation aufgefasst;durch Befehl wird Vektor daraus mit Ordnung!
+		Zwischenergebnis:=Zwischenergebnis[1];
+		for i:=1 to 48 do
+	
+			e[i]:=Zwischenergebnis[PC2[i]];
+
+		end for;
+		
+		S[KEYS[i]]:=e;
+
+	end for;
+	
+	outputkeys:=[S[KEYS[i]]: i in [2..17]];
+	//outputkeys:=1;
+	return outputkeys;
+	
+end function;
