@@ -1,6 +1,6 @@
 load "tripledes.magma";
 load "Hilfsfunktionen.mg";
-load "helpers.mg";
+load "helpers.magma";
 
 
 K_hex := "0123456789ABCDEF"; K := hex_to_bitvector(K_hex);
