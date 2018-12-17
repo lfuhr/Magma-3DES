@@ -1,74 +1,20 @@
 load "tripledes.magma";
 load "Hilfsfunktionen.mg";
+load "helpers.mg";
 
-// Fuhr
-function hex_to_bitvector(hex)
-	n := #hex;
-	assert n mod 2 eq 0;
-	vec := VectorSpace(GF(2), n*4)!0;
-	for i in [1..n] do
-		for j in [1..4] do
-			vec[(i-1)*4+j] := StringToInteger(hex[i], 16) div (2^(4-j));
-		end for;
-	end for;
-	return vec;
-end function;
-
-// Fuhr
-function bitvector_to_hex(bitvector)
-	n := OverDimension(bitvector);
-	assert n mod 8 eq 0;
-	str := "";
-	for i in [4*k : k in [0..n/4-1]] do
-		byte := 0;
-		for j in [1..4] do
-			byte +:= Integers()!bitvector[i+j] * 2^(4-j);
-		end for;
-		str cat:= IntegerToString(byte, 16);
-	end for;
-	return str;
-end function;
-// bitvector_to_hex(hex_to_bitvector("00CAFE00"));
 
 K_hex := "0123456789ABCDEF"; K := hex_to_bitvector(K_hex);
 P_hex := "4E6F772069732074"; P := hex_to_bitvector(P_hex);
 C_hex := "3FA40E8A984D4815"; C := hex_to_bitvector(C_hex);
 
-// Fuhr
-function enc_triple_DES_openSSL(plaintext, key)
-	WriteHex(plaintext, "plaintext");
-	System("openssl enc -des-ede3 -nopad -K " cat key cat " -in plaintext -out cipher");
-	return ReadHex("cipher");
-end function;
-
-// Fuhr
-function dec_triple_DES_openSSL(cipher, key)
-	WriteHex(cipher, "plaintext");
-	System("openssl enc -des-ede3 -nopad -K " cat key cat " -in plaintext -out plaintext");
-	return ReadHex("plaintext");
-end function;
-
-// Fuhr
-function enc_DES_openSSL(plaintext, key)
-	WriteHex(plaintext, "plaintext");
-	System("openssl enc -des-ecb -nopad -K " cat key cat " -in plaintext -out cipher");
-	return ReadHex("cipher");
-end function;
-
-// Fuhr
-function dec_DES_openSSL(cipher, key)
-	WriteHex(cipher, "cipher");
-	System("openssl enc -des-ecb -nopad -K " cat key cat " -in cipher -out plaintext");
-	return ReadHex("plaintext");
-end function;
 
 // Fuhr: Auskommentierte Funktionsaufrufe
 
-// // Des using Vectors of book
-// c := enc_DES( P, K );
-// "Plaintext:"; P_hex;
-// "Chiffrat:"; bitvector_to_hex( c );
-// "Plaintext again:"; bitvector_to_hex( dec_DES( c, K ) );
+// Des using Vectors of book
+c := enc_DES( P, K );
+"Plaintext:"; P_hex;
+"Chiffrat:"; bitvector_to_hex( c );
+"Plaintext again:"; bitvector_to_hex( dec_DES( c, K ) );
 
 // // Triple Des
 // V64:= VectorSpace(GF(2), 64);
@@ -77,15 +23,15 @@ end function;
 // "Chiffrat:"; bitvector_to_hex( c );
 // "Plaintext:"; bitvector_to_hex( dec_triple_DES( c, K1, K2, K3 ) );
 
-// OpenSSL DES
-p := Random(VectorSpace(GF(2), 64));
-p_hex := bitvector_to_hex(p);
-k := Random(VectorSpace(GF(2), 64));
-k_hex := bitvector_to_hex(k);
-c := enc_DES_openSSL(p_hex, k_hex);
-c := IntegerToString(StringToInteger(c, 16), 16); // Uppercase
-c1 := enc_DES( p, k );
-bitvector_to_hex(c1); c;
+// // OpenSSL DES
+// p := Random(VectorSpace(GF(2), 64));
+// p_hex := bitvector_to_hex(p);
+// k := Random(VectorSpace(GF(2), 64));
+// k_hex := bitvector_to_hex(k);
+// c := enc_DES_openSSL(p_hex, k_hex);
+// c := IntegerToString(StringToInteger(c, 16), 16); // Uppercase
+// c1 := enc_DES( p, k );
+// bitvector_to_hex(c1); c;
 
 // // OpenSSL DES as special case of 3DES
 // c := enc_triple_DES_openSSL(P_hex, K_hex cat K_hex cat K_hex);

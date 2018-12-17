@@ -58,8 +58,8 @@ function enc_DES(input, key : dec:=false)
 	L0R0 := input^IP;
 	L := Vector(Submatrix(L0R0, 1, 1, 1, 32));
 	R := Vector(Submatrix(L0R0, 1, 33, 1, 32));
-	// keys := keyscheduling(key);
-	keys := ks(key);
+	keys := keyscheduling(key);
+	// keys := ks(key);
 
 	if dec then
 		// R is left side  and  L is right side.
